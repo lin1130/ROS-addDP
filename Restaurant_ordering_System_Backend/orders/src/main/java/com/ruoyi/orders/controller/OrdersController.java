@@ -2,6 +2,8 @@ package com.ruoyi.orders.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.orders.service.OrderDecorator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * ordersController
- * 
+ *
  * @author group14
  * @date 2023-10-24
  */
@@ -33,6 +35,10 @@ public class OrdersController extends BaseController
 {
     @Autowired
     private IOrdersService ordersService;
+
+    public int InsertOrderRice(){
+        return 1;
+    }
 
     /**
      * 查询orders列表
