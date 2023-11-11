@@ -1,6 +1,7 @@
 package com.ruoyi.orders.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.orders.mapper.OrdersMapper;
@@ -18,6 +19,23 @@ public class OrdersServiceImpl implements IOrdersService
 {
     @Autowired
     private OrdersMapper ordersMapper;
+
+//    @Override
+//    public int addRice(Orders orders) {
+//        return 0;
+//    }
+
+    @Override
+    public Orders addRice(Orders orders) {
+        int result =  ordersMapper.addRice(orders);
+        if (result > 0) {
+            // add successful, return the inserted DECORATOR data
+            return orders;
+        } else {
+            // add failed, return null or throw an exception
+            return null;
+        }
+    }
 
     /**
      * 查询orders

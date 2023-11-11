@@ -36,9 +36,20 @@ public class OrdersController extends BaseController
     @Autowired
     private IOrdersService ordersService;
 
-    public int InsertOrderRice(){
-        return 1;
-    }
+//    /**
+//     * 新增rice
+//     */
+//    @PreAuthorize("@ss.hasPermi('orders:orders:edit')")
+//    @Log(title = "orders", businessType = BusinessType.UPDATE)
+//    @PostMapping
+//    // public AjaxResult add(@RequestBody Orders orders)
+//    // {
+//    //     return toAjax(ordersService.insertOrders(orders));
+//    // }
+//    public Orders addRice(@RequestBody Orders orders) {
+//        return ordersService.addRice(orders);
+//    }
+
 
     /**
      * 查询orders列表
@@ -86,6 +97,7 @@ public class OrdersController extends BaseController
     //     return toAjax(ordersService.insertOrders(orders));
     // }
     public Orders add(@RequestBody Orders orders) {
+//        System.out.println(ordersService.addRice(orders));
         return ordersService.insertOrders(orders);
     }
 
@@ -100,6 +112,13 @@ public class OrdersController extends BaseController
         return toAjax(ordersService.updateOrders(orders));
     }
 
+//    @PreAuthorize("@ss.hasPermi('orders:orders:addRice')")
+//    @Log(title = "orders", businessType = BusinessType.UPDATE)
+//    @PutMapping  这三行加了就报错
+    public Orders addRice(@RequestBody Orders orders) {
+//        System.out.println(ordersService.addRice(orders));
+        return ordersService.addRice(orders);
+    }
     /**
      * 删除orders
      */

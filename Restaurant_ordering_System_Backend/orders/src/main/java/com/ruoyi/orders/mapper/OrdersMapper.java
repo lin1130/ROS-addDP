@@ -2,6 +2,7 @@ package com.ruoyi.orders.mapper;
 
 import java.util.List;
 import com.ruoyi.orders.domain.Orders;
+import org.aspectj.weaver.ast.Or;
 
 /**
  * ordersMapper接口
@@ -11,6 +12,13 @@ import com.ruoyi.orders.domain.Orders;
  */
 public interface OrdersMapper 
 {
+    /**
+     * 添加rice
+     *
+     *
+     * @return orders
+     */
+    public int addRice(Orders orders);
     /**
      * 查询orders
      * 

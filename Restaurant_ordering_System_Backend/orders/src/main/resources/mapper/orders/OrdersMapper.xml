@@ -54,6 +54,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where order_id = #{orderId}
     </update>
 
+<!--    <update id="addRice" parameterType="Orders">-->
+<!--        update orders-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="orderDecorator != null">order_decorator = #{orderDecorator},</if>-->
+<!--        </trim>-->
+<!--        where order_id = #{orderId}-->
+<!--    </update>-->
+
     <delete id="deleteOrdersByOrderId" parameterType="Long">
         delete from orders where order_id = #{orderId}
     </delete>

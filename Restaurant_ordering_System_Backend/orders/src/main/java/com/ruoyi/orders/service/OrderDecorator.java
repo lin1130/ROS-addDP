@@ -1,5 +1,7 @@
 package com.ruoyi.orders.service;
 
+import com.ruoyi.orders.domain.Orders;
+
 public interface OrderDecorator extends IOrdersService{
-    public int addRice();
+    public Orders addRice(Orders orders);
 }

@@ -2,6 +2,7 @@ package com.ruoyi.orders.service;
 
 import java.util.List;
 import com.ruoyi.orders.domain.Orders;
+import org.springframework.core.annotation.Order;
 
 /**
  * ordersService接口
@@ -11,9 +12,10 @@ import com.ruoyi.orders.domain.Orders;
  */
 public interface IOrdersService 
 {
+    public Orders addRice(Orders orders);
     /**
      * 查询orders
-     * 
+     *
      * @param orderId orders主键
      * @return orders
      */
@@ -21,7 +23,7 @@ public interface IOrdersService
 
     /**
      * 查询orders列表
-     * 
+     *
      * @param orders orders
      * @return orders集合
      */
@@ -29,7 +31,7 @@ public interface IOrdersService
 
     /**
      * 新增orders
-     * 
+     *
      * @param orders orders
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface IOrdersService
 
     /**
      * 修改orders
-     * 
+     *
      * @param orders orders
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface IOrdersService
 
     /**
      * 批量删除orders
-     * 
+     *
      * @param orderIds 需要删除的orders主键集合
      * @return 结果
      */
@@ -53,7 +55,7 @@ public interface IOrdersService
 
     /**
      * 删除orders信息
-     * 
+     *
      * @param orderId orders主键
      * @return 结果
      */

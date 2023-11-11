@@ -33,6 +33,10 @@ public class Orders extends BaseEntity
     @Excel(name = "order state")
     private String orderState;
 
+    /** order decorator */
+    @Excel(name = "order decorator")
+    private String orderDecorator;
+
     public void setOrderId(Long orderId) 
     {
         this.orderId = orderId;
@@ -70,6 +74,16 @@ public class Orders extends BaseEntity
         return orderState;
     }
 
+    public void setOrderDecorator(String orderDecorator)
+    {
+        this.orderState = orderDecorator;
+    }
+
+    public String getOrderDecorator()
+    {
+        return orderDecorator;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -77,6 +91,7 @@ public class Orders extends BaseEntity
             .append("userId", getUserId())
             .append("orderTime", getOrderTime())
             .append("orderState", getOrderState())
+            .append("orderDecorator", getOrderDecorator())
             .toString();
     }
 }

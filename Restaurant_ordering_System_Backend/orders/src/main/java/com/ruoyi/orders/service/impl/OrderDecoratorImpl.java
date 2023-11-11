@@ -1,16 +1,19 @@
 package com.ruoyi.orders.service.impl;
 
 import com.ruoyi.orders.domain.Orders;
+import com.ruoyi.orders.mapper.OrdersMapper;
 import com.ruoyi.orders.service.OrderDecorator;
 
 import java.util.List;
 
 public class OrderDecoratorImpl implements OrderDecorator {
+    private OrdersMapper ordersMapper;
+
     @Override
-    public int addRice() {
-        System.out.println("Order add rice");
-        return 1;
+    public Orders addRice(Orders orders) {
+        return null;
     }
+
     @Override
     public Orders selectOrdersByOrderId(Long orderId) {
         return null;
