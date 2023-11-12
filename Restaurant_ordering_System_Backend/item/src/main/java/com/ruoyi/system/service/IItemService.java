@@ -1,60 +1,60 @@
-package com.ruoyi.item.service;
+package com.ruoyi.system.service;
 
 import java.util.List;
-import com.ruoyi.item.domain.Item;
+import com.ruoyi.system.domain.Item;
 
 /**
- * itemService接口
+ * item tableService接口
  * 
- * @author group14
- * @date 2023-10-24
+ * @author ruoyi
+ * @date 2023-11-12
  */
 public interface IItemService 
 {
     /**
-     * 查询item
+     * 查询item table
      * 
-     * @param itemId item主键
-     * @return item
+     * @param itemId item table主键
+     * @return item table
      */
     public Item selectItemByItemId(Long itemId);
 
     /**
-     * 查询item列表
+     * 查询item table列表
      * 
-     * @param item item
-     * @return item集合
+     * @param item item table
+     * @return item table集合
      */
     public List<Item> selectItemList(Item item);
 
     /**
-     * 新增item
+     * 新增item table
      * 
-     * @param item item
+     * @param item item table
      * @return 结果
      */
     public int insertItem(Item item);
 
     /**
-     * 修改item
+     * 修改item table
      * 
-     * @param item item
+     * @param item item table
      * @return 结果
      */
     public int updateItem(Item item);
 
     /**
-     * 批量删除item
+     * 批量删除item table
      * 
-     * @param itemIds 需要删除的item主键集合
+     * @param itemIds 需要删除的item table主键集合
      * @return 结果
      */
     public int deleteItemByItemIds(Long[] itemIds);
 
     /**
-     * 删除item信息
+     * 删除item table信息
      * 
-     * @param itemId item主键
+     * @param itemId item table主键
      * @return 结果
      */
     public int deleteItemByItemId(Long itemId);

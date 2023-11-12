@@ -1,4 +1,4 @@
-package com.ruoyi.item.domain;
+package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,10 +7,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * item对象 item
+ * item table对象 item
  * 
- * @author group14
- * @date 2023-10-24
+ * @author ruoyi
+ * @date 2023-11-12
  */
 public class Item extends BaseEntity
 {
@@ -34,6 +34,10 @@ public class Item extends BaseEntity
     /** item description */
     @Excel(name = "item description")
     private String itemDescription;
+
+    /** item state */
+    @Excel(name = "item state")
+    private String itemState;
 
     /** order number */
     @Excel(name = "order number")
@@ -84,6 +88,15 @@ public class Item extends BaseEntity
     {
         return itemDescription;
     }
+    public void setItemState(String itemState) 
+    {
+        this.itemState = itemState;
+    }
+
+    public String getItemState() 
+    {
+        return itemState;
+    }
     public void setOrderNum(Integer orderNum) 
     {
         this.orderNum = orderNum;
@@ -102,6 +115,7 @@ public class Item extends BaseEntity
             .append("itemName", getItemName())
             .append("itemPrice", getItemPrice())
             .append("itemDescription", getItemDescription())
+            .append("itemState", getItemState())
             .append("orderNum", getOrderNum())
             .toString();
     }

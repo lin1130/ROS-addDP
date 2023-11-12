@@ -1,7 +1,9 @@
-package com.ruoyi.item.controller;
+package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.service.ItemState;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,28 +18,33 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.item.domain.Item;
-import com.ruoyi.item.service.IItemService;
+import com.ruoyi.system.domain.Item;
+import com.ruoyi.system.service.IItemService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * itemController
- * 
- * @author group14
- * @date 2023-10-24
+ * item tableController
+ *
+ * @author ruoyi
+ * @date 2023-11-12
  */
 @RestController
-@RequestMapping("/item/item")
+@RequestMapping("/system/item")
 public class ItemController extends BaseController
 {
     @Autowired
     private IItemService itemService;
+    private ItemState currentState;
+
+    public void setItemState(Item item) {
+        currentState.setState(item);
+    }
 
     /**
-     * 查询item列表
+     * 查询item table列表
      */
-    @PreAuthorize("@ss.hasPermi('item:item:list')")
+    @PreAuthorize("@ss.hasPermi('system:item:list')")
     @GetMapping("/list")
     public TableDataInfo list(Item item)
     {
@@ -47,22 +54,22 @@ public class ItemController extends BaseController
     }
 
     /**
-     * 导出item列表
+     * 导出item table列表
      */
-    @PreAuthorize("@ss.hasPermi('item:item:export')")
-    @Log(title = "item", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('system:item:export')")
+    @Log(title = "item table", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Item item)
     {
         List<Item> list = itemService.selectItemList(item);
         ExcelUtil<Item> util = new ExcelUtil<Item>(Item.class);
-        util.exportExcel(response, list, "item数据");
+        util.exportExcel(response, list, "item table数据");
     }
 
     /**
-     * 获取item详细信息
+     * 获取item table详细信息
      */
-    @PreAuthorize("@ss.hasPermi('item:item:query')")
+    @PreAuthorize("@ss.hasPermi('system:item:query')")
     @GetMapping(value = "/{itemId}")
     public AjaxResult getInfo(@PathVariable("itemId") Long itemId)
     {
@@ -70,10 +77,10 @@ public class ItemController extends BaseController
     }
 
     /**
-     * 新增item
+     * 新增item table
      */
-    @PreAuthorize("@ss.hasPermi('item:item:add')")
-    @Log(title = "item", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('system:item:add')")
+    @Log(title = "item table", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Item item)
     {
@@ -81,10 +88,10 @@ public class ItemController extends BaseController
     }
 
     /**
-     * 修改item
+     * 修改item table
      */
-    @PreAuthorize("@ss.hasPermi('item:item:edit')")
-    @Log(title = "item", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('system:item:edit')")
+    @Log(title = "item table", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Item item)
     {
@@ -92,10 +99,10 @@ public class ItemController extends BaseController
     }
 
     /**
-     * 删除item
+     * 删除item table
      */
-    @PreAuthorize("@ss.hasPermi('item:item:remove')")
-    @Log(title = "item", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('system:item:remove')")
+    @Log(title = "item table", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{itemIds}")
     public AjaxResult remove(@PathVariable Long[] itemIds)
     {

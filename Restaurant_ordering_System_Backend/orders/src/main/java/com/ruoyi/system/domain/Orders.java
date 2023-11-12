@@ -1,4 +1,4 @@
-package com.ruoyi.orders.domain;
+package com.ruoyi.system.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,10 +8,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * orders对象 orders
+ * Order List对象 orders
  * 
- * @author group14
- * @date 2023-10-24
+ * @author ruoyi
+ * @date 2023-11-12
  */
 public class Orders extends BaseEntity
 {
@@ -29,13 +29,13 @@ public class Orders extends BaseEntity
     @Excel(name = "order time", width = 30, dateFormat = "yyyy-MM-dd")
     private Date orderTime;
 
-    /** order state */
-    @Excel(name = "order state")
-    private String orderState;
-
-    /** order decorator */
-    @Excel(name = "order decorator")
+    /** order decorater */
+    @Excel(name = "order decorater")
     private String orderDecorator;
+
+    /** order */
+    @Excel(name = "order")
+    private String orderState;
 
     public void setOrderId(Long orderId) 
     {
@@ -64,6 +64,15 @@ public class Orders extends BaseEntity
     {
         return orderTime;
     }
+    public void setOrderDecorator(String orderDecorator) 
+    {
+        this.orderDecorator = orderDecorator;
+    }
+
+    public String getOrderDecorator() 
+    {
+        return orderDecorator;
+    }
     public void setOrderState(String orderState) 
     {
         this.orderState = orderState;
@@ -74,24 +83,14 @@ public class Orders extends BaseEntity
         return orderState;
     }
 
-    public void setOrderDecorator(String orderDecorator)
-    {
-        this.orderState = orderDecorator;
-    }
-
-    public String getOrderDecorator()
-    {
-        return orderDecorator;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("orderId", getOrderId())
             .append("userId", getUserId())
             .append("orderTime", getOrderTime())
-            .append("orderState", getOrderState())
             .append("orderDecorator", getOrderDecorator())
+            .append("orderState", getOrderState())
             .toString();
     }
 }

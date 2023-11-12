@@ -224,6 +224,9 @@ export default {
       this.ids = selection.map(item => item.itemId)
       this.single = selection.length!==1
       this.multiple = !selection.length
+      if(this.user.userId != '1') {
+        this.itemList.filter(item => item.itemState === 'on');
+      }
     },
     /** 新增按钮操作 */
     handleAdd() {

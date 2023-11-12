@@ -1,8 +1,8 @@
-package com.ruoyi.orders.service.impl;
+package com.ruoyi.system.service.impl;
 
-import com.ruoyi.orders.domain.Orders;
-import com.ruoyi.orders.mapper.OrdersMapper;
-import com.ruoyi.orders.service.OrderDecorator;
+import com.ruoyi.system.domain.Orders;
+import com.ruoyi.system.mapper.OrdersMapper;
+import com.ruoyi.system.service.OrderDecorator;
 
 import java.util.List;
 
