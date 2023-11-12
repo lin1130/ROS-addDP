@@ -32,6 +32,7 @@
           <span>{{ parseTime(scope.row.orderTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="order decorator" align="center" prop="orderDecorator" />
       <el-table-column label="order state" align="center" prop="orderState" />
       <el-table-column label="operation" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -49,7 +50,6 @@
             type="text"
             icon="el-icon-view"
             @click="viewDetails(scope.row)"
-            v-hasPermi="['orders:orders:view']"
           >view details</el-button>
         </template>
       </el-table-column>
@@ -114,6 +114,7 @@ export default {
         orderId: null,
         userId: null,
         orderTime: null,
+        orderDecorator: null,
         orderState: null
       },
       queryDetails: {
@@ -169,6 +170,7 @@ export default {
         orderId: null,
         userId: null,
         orderTime: null,
+        orderDecorator: null,
         orderState: null
       };
       this.resetForm("form");

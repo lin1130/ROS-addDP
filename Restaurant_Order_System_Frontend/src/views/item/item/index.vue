@@ -77,6 +77,12 @@
       </el-table-column>
     </el-table>
 
+    <el-row style="margin-top: 20px;" v-if="user.userId != 1">
+      <h3>Choose Rice</h3>
+      <el-radio v-model="radio" label="1"">yes</el-radio>
+      <el-radio v-model="radio" label="2"">no</el-radio>
+    </el-row>
+
     <el-row style="text-align: right; margin-top: 50px;" v-if="user.userId != 1">
       <el-button type="primary" @click="submitCounters">Submit Order</el-button>
     </el-row>
@@ -144,6 +150,7 @@ export default {
         itemPrice: null,
         itemDescription: null,
       },
+      radio: '2',
       // 表单参数
       form: {},
       // 表单校验
@@ -282,7 +289,9 @@ export default {
     getOrderInfo(){
       this.orderInfo = {
         userId: this.user.userId,
-        orderTime: this.currentTime
+        orderTime: this.currentTime,
+        orderDecorator: "none",
+        orderState: "uncompleted"
       }
     },
     async submitCounters() {
@@ -296,6 +305,11 @@ export default {
       } else {
         try {
           // 执行提交操作
+          if (this.radio === '1'){
+            this.orderInfo.orderDecorator = "rice";
+          }
+          console.log(this.radio === '1');
+          console.log(this.orderInfo.orderDecorator);
           const response = await addOrders(this.orderInfo);
           this.$modal.msgSuccess("Order creation success");
           console.log(response);
