@@ -1,0 +1,118 @@
+name: Front-end build and deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: browser-actions/setup-chrome@latest
+
+      - name: Set up Nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        working-directory: Restaurant_Order_System_Frontend
+        run: |
+          npm install
+
+      # - name: Conventional Changelog Action
+      #   id: changelog
+      #   uses: TriPSs/conventional-changelog-action@v3
+      #   with:
+      #     github-token: ${{ secrets.DEVOPS }} # 这里更换GitHub仓库的secret
+      #     output-file: "false"
+
+      # - name: Create Release
+      #   uses: actions/create-release@v1
+      #   if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.DEVOPS }} # 这里更换GitHub仓库的secret
+      #   with:
+      #     tag_name: ${{ steps.changelog.outputs.tag }}
+      #     release_name: ${{ steps.changelog.outputs.tag }}
+      #     body: ${{ steps.changelog.outputs.clean_changelog }}
+
+      - name: Run scan with ESLint
+        working-directory: Restaurant_Order_System_Frontend
+        run:  |
+          npx eslint src/ --fix --format json --output-file eslint-report.json || true
+
+      - name: Archive production artifacts
+        if: success() || failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: eslint-report
+          path: |
+            Restaurant_Order_System_Frontend/eslint-report.json
+      
+      - name: Build with Vuejs
+        working-directory: Restaurant_Order_System_Frontend
+        run: |
+          npm run build:prod
+          echo "begin copy html "
+          cp -r ../Restaurant_Order_System_Frontend/dist/** ../docker/nginx/html/dist
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: docker/nginx/html/dist
+          github-token: ${{ secrets.DEVOPS }}
+
+      - name: DockerHub Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker/nginx
+          push: true
+          tags: ${{ secrets.USERNAME }}/frontend:v1
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          EC2_HOST: ${{ secrets.EC2_UI }}
+
+      # docker run --name frontend -p 80:80 -d linfan1130/frontend:v1
+      - name: Deploy frontend to Cloud
+        working-directory: Restaurant_Order_System_Frontend
+        run: |
+          ssh -i ~/.ssh/id_rsa ubuntu@$EC2_HOST "docker pull $USERNAME/frontend:v1"
+        env:
+          EC2_HOST: ${{ secrets.EC2_UI }}
+          USERNAME: ${{ secrets.USERNAME }}
+
+      
