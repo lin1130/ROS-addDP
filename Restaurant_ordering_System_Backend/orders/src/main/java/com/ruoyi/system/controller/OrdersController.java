@@ -30,7 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-11-12
  */
 @RestController
-@RequestMapping("/system/orders")
+@RequestMapping("/orders/orders")
 public class OrdersController extends BaseController
 {
     @Autowired
@@ -51,7 +51,7 @@ public class OrdersController extends BaseController
     /**
      * 导出Order List列表
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:export')")
+    @PreAuthorize("@ss.hasPermi('orders:orders:export')")
     @Log(title = "Order List", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Orders orders)
@@ -64,7 +64,7 @@ public class OrdersController extends BaseController
     /**
      * 获取Order List详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:query')")
+    @PreAuthorize("@ss.hasPermi('orders:orders:query')")
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") Long orderId)
     {
@@ -97,7 +97,7 @@ public class OrdersController extends BaseController
     /**
      * 修改Order List
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:edit')")
+    @PreAuthorize("@ss.hasPermi('orders:orders:edit')")
     @Log(title = "Order List", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Orders orders)
@@ -108,7 +108,7 @@ public class OrdersController extends BaseController
     /**
      * 删除Order List
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:remove')")
+    @PreAuthorize("@ss.hasPermi('orders:orders:remove')")
     @Log(title = "Order List", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable Long[] orderIds)
