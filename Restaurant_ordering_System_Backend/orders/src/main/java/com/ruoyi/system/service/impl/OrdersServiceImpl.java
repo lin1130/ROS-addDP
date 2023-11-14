@@ -1,29 +1,34 @@
-package com.ruoyi.orders.service.impl;
+package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.orders.mapper.OrdersMapper;
-import com.ruoyi.orders.domain.Orders;
-import com.ruoyi.orders.service.IOrdersService;
+import com.ruoyi.system.mapper.OrdersMapper;
+import com.ruoyi.system.domain.Orders;
+import com.ruoyi.system.service.IOrdersService;
 
 /**
- * ordersService业务层处理
- * 
- * @author group14
- * @date 2023-10-24
+ * Order ListService业务层处理
+ *
+ * @author ruoyi
+ * @date 2023-11-12
  */
 @Service
-public class OrdersServiceImpl implements IOrdersService 
+public class OrdersServiceImpl implements IOrdersService
 {
     @Autowired
     private OrdersMapper ordersMapper;
 
+    @Override
+    public Orders addRice(Orders orders) {
+        return null;
+    }
+
     /**
-     * 查询orders
-     * 
-     * @param orderId orders主键
-     * @return orders
+     * 查询Order List
+     *
+     * @param orderId Order List主键
+     * @return Order List
      */
     @Override
     public Orders selectOrdersByOrderId(Long orderId)
@@ -32,10 +37,10 @@ public class OrdersServiceImpl implements IOrdersService
     }
 
     /**
-     * 查询orders列表
-     * 
-     * @param orders orders
-     * @return orders
+     * 查询Order List列表
+     *
+     * @param orders Order List
+     * @return Order List
      */
     @Override
     public List<Orders> selectOrdersList(Orders orders)
@@ -44,9 +49,9 @@ public class OrdersServiceImpl implements IOrdersService
     }
 
     /**
-     * 新增orders
-     * 
-     * @param orders orders
+     * 新增Order List
+     *
+     * @param orders Order List
      * @return 结果
      */
     @Override
@@ -66,9 +71,9 @@ public class OrdersServiceImpl implements IOrdersService
     }
 
     /**
-     * 修改orders
-     * 
-     * @param orders orders
+     * 修改Order List
+     *
+     * @param orders Order List
      * @return 结果
      */
     @Override
@@ -78,9 +83,9 @@ public class OrdersServiceImpl implements IOrdersService
     }
 
     /**
-     * 批量删除orders
-     * 
-     * @param orderIds 需要删除的orders主键
+     * 批量删除Order List
+     *
+     * @param orderIds 需要删除的Order List主键
      * @return 结果
      */
     @Override
@@ -90,9 +95,9 @@ public class OrdersServiceImpl implements IOrdersService
     }
 
     /**
-     * 删除orders信息
-     * 
-     * @param orderId orders主键
+     * 删除Order List信息
+     *
+     * @param orderId Order List主键
      * @return 结果
      */
     @Override

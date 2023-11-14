@@ -1,17 +1,17 @@
-package com.ruoyi.item.service.impl;
+package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.item.mapper.ItemMapper;
-import com.ruoyi.item.domain.Item;
-import com.ruoyi.item.service.IItemService;
+import com.ruoyi.system.mapper.ItemMapper;
+import com.ruoyi.system.domain.Item;
+import com.ruoyi.system.service.IItemService;
 
 /**
- * itemService业务层处理
+ * item tableService业务层处理
  * 
- * @author group14
- * @date 2023-10-24
+ * @author ruoyi
+ * @date 2023-11-12
  */
 @Service
 public class ItemServiceImpl implements IItemService 
@@ -20,10 +20,10 @@ public class ItemServiceImpl implements IItemService
     private ItemMapper itemMapper;
 
     /**
-     * 查询item
+     * 查询item table
      * 
-     * @param itemId item主键
-     * @return item
+     * @param itemId item table主键
+     * @return item table
      */
     @Override
     public Item selectItemByItemId(Long itemId)
@@ -32,10 +32,10 @@ public class ItemServiceImpl implements IItemService
     }
 
     /**
-     * 查询item列表
+     * 查询item table列表
      * 
-     * @param item item
-     * @return item
+     * @param item item table
+     * @return item table
      */
     @Override
     public List<Item> selectItemList(Item item)
@@ -44,9 +44,9 @@ public class ItemServiceImpl implements IItemService
     }
 
     /**
-     * 新增item
+     * 新增item table
      * 
-     * @param item item
+     * @param item item table
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class ItemServiceImpl implements IItemService
     }
 
     /**
-     * 修改item
+     * 修改item table
      * 
-     * @param item item
+     * @param item item table
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class ItemServiceImpl implements IItemService
     }
 
     /**
-     * 批量删除item
+     * 批量删除item table
      * 
-     * @param itemIds 需要删除的item主键
+     * @param itemIds 需要删除的item table主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class ItemServiceImpl implements IItemService
     }
 
     /**
-     * 删除item信息
+     * 删除item table信息
      * 
-     * @param itemId item主键
+     * @param itemId item table主键
      * @return 结果
      */
     @Override

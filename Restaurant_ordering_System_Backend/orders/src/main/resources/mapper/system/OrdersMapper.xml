@@ -2,25 +2,26 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.orders.mapper.OrdersMapper">
+<mapper namespace="com.ruoyi.system.mapper.OrdersMapper">
     
     <resultMap type="Orders" id="OrdersResult">
         <result property="orderId"    column="order_id"    />
         <result property="userId"    column="user_id"    />
         <result property="orderTime"    column="order_time"    />
+        <result property="orderDecorator"    column="order_decorator"    />
         <result property="orderState"    column="order_state"    />
     </resultMap>
 
     <sql id="selectOrdersVo">
-        select order_id, user_id, order_time, order_state from orders
+        select order_id, user_id, order_time, order_decorator, order_state from orders
     </sql>
 
     <select id="selectOrdersList" parameterType="Orders" resultMap="OrdersResult">
         <include refid="selectOrdersVo"/>
         <where>  
-            <if test="orderId != null "> and order_id = #{orderId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="params.beginOrderTime != null and params.beginOrderTime != '' and params.endOrderTime != null and params.endOrderTime != ''"> and order_time between #{params.beginOrderTime} and #{params.endOrderTime}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="orderDecorator != null  and orderDecorator != ''"> and order_decorator = #{orderDecorator}</if>
             <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
         </where>
     </select>
@@ -35,11 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
             <if test="orderTime != null">order_time,</if>
+            <if test="orderDecorator != null">order_decorator,</if>
             <if test="orderState != null">order_state,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="orderTime != null">#{orderTime},</if>
+            <if test="orderDecorator != null">#{orderDecorator},</if>
             <if test="orderState != null">#{orderState},</if>
          </trim>
     </insert>
@@ -49,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
             <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="orderDecorator != null">order_decorator = #{orderDecorator},</if>
             <if test="orderState != null">order_state = #{orderState},</if>
         </trim>
         where order_id = #{orderId}

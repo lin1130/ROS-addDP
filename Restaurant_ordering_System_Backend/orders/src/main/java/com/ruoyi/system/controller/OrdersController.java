@@ -1,7 +1,9 @@
-package com.ruoyi.orders.controller;
+package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.service.OrderDecorator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,28 +18,28 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.orders.domain.Orders;
-import com.ruoyi.orders.service.IOrdersService;
+import com.ruoyi.system.domain.Orders;
+import com.ruoyi.system.service.IOrdersService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * ordersController
- * 
- * @author group14
- * @date 2023-10-24
+ * Order ListController
+ *
+ * @author ruoyi
+ * @date 2023-11-12
  */
 @RestController
-@RequestMapping("/orders/orders")
+@RequestMapping("/system/orders")
 public class OrdersController extends BaseController
 {
     @Autowired
     private IOrdersService ordersService;
 
     /**
-     * 查询orders列表
+     * 查询Order List列表
      */
-    @PreAuthorize("@ss.hasPermi('orders:orders:list')")
+//    @PreAuthorize("@ss.hasPermi('system:orders:list')")
     @GetMapping("/list")
     public TableDataInfo list(Orders orders)
     {
@@ -47,22 +49,22 @@ public class OrdersController extends BaseController
     }
 
     /**
-     * 导出orders列表
+     * 导出Order List列表
      */
-    @PreAuthorize("@ss.hasPermi('orders:orders:export')")
-    @Log(title = "orders", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('system:orders:export')")
+    @Log(title = "Order List", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Orders orders)
     {
         List<Orders> list = ordersService.selectOrdersList(orders);
         ExcelUtil<Orders> util = new ExcelUtil<Orders>(Orders.class);
-        util.exportExcel(response, list, "orders数据");
+        util.exportExcel(response, list, "Order List数据");
     }
 
     /**
-     * 获取orders详细信息
+     * 获取Order List详细信息
      */
-    @PreAuthorize("@ss.hasPermi('orders:orders:query')")
+    @PreAuthorize("@ss.hasPermi('system:orders:query')")
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") Long orderId)
     {
@@ -70,7 +72,7 @@ public class OrdersController extends BaseController
     }
 
     /**
-     * 新增orders
+     * 新增Order List
      */
     @PreAuthorize("@ss.hasPermi('orders:orders:add')")
     @Log(title = "orders", businessType = BusinessType.INSERT)
@@ -80,14 +82,23 @@ public class OrdersController extends BaseController
     //     return toAjax(ordersService.insertOrders(orders));
     // }
     public Orders add(@RequestBody Orders orders) {
+//        System.out.println(ordersService.addRice(orders));
         return ordersService.insertOrders(orders);
     }
 
+    //@PreAuthorize("@ss.hasPermi('orders:orders:addRice')")
+    //@Log(title = "orders", businessType = BusinessType.UPDATE)
+    //@PutMapping  这三行加了就报错
+    public Orders addRice(@RequestBody Orders orders) {
+//        System.out.println(ordersService.addRice(orders));
+        return ordersService.addRice(orders);
+    }
+
     /**
-     * 修改orders
+     * 修改Order List
      */
-    @PreAuthorize("@ss.hasPermi('orders:orders:edit')")
-    @Log(title = "orders", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('system:orders:edit')")
+    @Log(title = "Order List", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Orders orders)
     {
@@ -95,10 +106,10 @@ public class OrdersController extends BaseController
     }
 
     /**
-     * 删除orders
+     * 删除Order List
      */
-    @PreAuthorize("@ss.hasPermi('orders:orders:remove')")
-    @Log(title = "orders", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('system:orders:remove')")
+    @Log(title = "Order List", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable Long[] orderIds)
     {

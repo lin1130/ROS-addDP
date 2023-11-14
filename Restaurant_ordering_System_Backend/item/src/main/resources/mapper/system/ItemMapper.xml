@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.item.mapper.ItemMapper">
+<mapper namespace="com.ruoyi.system.mapper.ItemMapper">
     
     <resultMap type="Item" id="ItemResult">
         <result property="itemId"    column="item_id"    />
@@ -10,19 +10,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="itemName"    column="item_name"    />
         <result property="itemPrice"    column="item_price"    />
         <result property="itemDescription"    column="item_description"    />
+        <result property="itemState"    column="item_state"    />
         <result property="orderNum"    column="order_num"    />
     </resultMap>
 
     <sql id="selectItemVo">
-        select item_id, item_pic, item_name, item_price, item_description, order_num from item
+        select item_id, item_pic, item_name, item_price, item_description, item_state, order_num from item
     </sql>
 
     <select id="selectItemList" parameterType="Item" resultMap="ItemResult">
         <include refid="selectItemVo"/>
         <where>  
+            <if test="itemPic != null  and itemPic != ''"> and item_pic = #{itemPic}</if>
             <if test="itemName != null  and itemName != ''"> and item_name like concat('%', #{itemName}, '%')</if>
-            <if test="params.beginItemPrice != null and params.beginItemPrice != '' and params.endItemPrice != null and params.endItemPrice != ''"> and item_price between #{params.beginItemPrice} and #{params.endItemPrice}</if>
-            <if test="itemDescription != null  and itemDescription != ''"> and item_description like concat('%', #{itemDescription}, '%')</if>
+            <if test="itemPrice != null "> and item_price = #{itemPrice}</if>
+            <if test="itemDescription != null  and itemDescription != ''"> and item_description = #{itemDescription}</if>
+            <if test="itemState != null  and itemState != ''"> and item_state = #{itemState}</if>
+            <if test="orderNum != null "> and order_num = #{orderNum}</if>
         </where>
     </select>
     
@@ -38,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="itemName != null">item_name,</if>
             <if test="itemPrice != null">item_price,</if>
             <if test="itemDescription != null">item_description,</if>
+            <if test="itemState != null">item_state,</if>
             <if test="orderNum != null">order_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -45,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="itemName != null">#{itemName},</if>
             <if test="itemPrice != null">#{itemPrice},</if>
             <if test="itemDescription != null">#{itemDescription},</if>
+            <if test="itemState != null">#{itemState},</if>
             <if test="orderNum != null">#{orderNum},</if>
          </trim>
     </insert>
@@ -56,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="itemName != null">item_name = #{itemName},</if>
             <if test="itemPrice != null">item_price = #{itemPrice},</if>
             <if test="itemDescription != null">item_description = #{itemDescription},</if>
+            <if test="itemState != null">item_state = #{itemState},</if>
             <if test="orderNum != null">order_num = #{orderNum},</if>
         </trim>
         where item_id = #{itemId}
