@@ -11,7 +11,7 @@
  Target Server Version : 50743
  File Encoding         : 65001
 
- Date: 12/11/2023 23:05:41
+ Date: 14/11/2023 19:13:44
 */
 
 SET NAMES utf8mb4;
@@ -110,6 +110,7 @@ CREATE TABLE `item`  (
   `item_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'item name',
   `item_price` double(10, 2) NULL DEFAULT 0.00 COMMENT 'item price',
   `item_description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'item description',
+  `item_state` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'item state',
   `order_num` int(4) NULL DEFAULT 0 COMMENT 'order number',
   PRIMARY KEY (`item_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 238 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'item table' ROW_FORMAT = DYNAMIC;
@@ -117,9 +118,6 @@ CREATE TABLE `item`  (
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES (235, '/profile/upload/2023/11/03/OIP_20231103141448A001.jpg', 'noodle', 5.00, 'spicy', 0);
-INSERT INTO `item` VALUES (236, '/profile/upload/2023/11/03/rice_20231103141512A002.jpg', 'fried rice', 10.00, 'spicy', 0);
-INSERT INTO `item` VALUES (237, '/profile/upload/2023/11/03/cs载_20231103142118A003.jpg', 'chaoshou', 7.00, 'spicy', 0);
 
 -- ----------------------------
 -- Table structure for order_details
@@ -135,19 +133,11 @@ CREATE TABLE `order_details`  (
   INDEX `item_id`(`item_id`) USING BTREE,
   CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'order details table' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'order details table' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_details
 -- ----------------------------
-INSERT INTO `order_details` VALUES (17, 1, 235, 1);
-INSERT INTO `order_details` VALUES (18, 1, 236, 1);
-INSERT INTO `order_details` VALUES (19, 2, 235, 1);
-INSERT INTO `order_details` VALUES (20, 3, 235, 1);
-INSERT INTO `order_details` VALUES (21, 4, 235, 1);
-INSERT INTO `order_details` VALUES (22, 5, 235, 1);
-INSERT INTO `order_details` VALUES (23, 6, 235, 1);
-INSERT INTO `order_details` VALUES (24, 7, 236, 1);
 
 -- ----------------------------
 -- Table structure for orders
@@ -160,18 +150,11 @@ CREATE TABLE `orders`  (
   `order_decorator` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'none' COMMENT 'order decorater',
   `order_state` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'uncompleted' COMMENT 'order',
   PRIMARY KEY (`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Order List' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Order List' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (1, 104, '2023-11-12 00:00:00', 'none', 'uncompleted');
-INSERT INTO `orders` VALUES (2, 104, '2023-11-12 00:00:00', 'none', 'uncompleted');
-INSERT INTO `orders` VALUES (3, 104, '2023-11-12 00:00:00', 'none', 'rice');
-INSERT INTO `orders` VALUES (4, 104, '2023-11-12 00:00:00', 'none', 'rice');
-INSERT INTO `orders` VALUES (5, 104, '2023-11-12 00:00:00', 'none', 'uncompleted');
-INSERT INTO `orders` VALUES (6, 104, '2023-11-12 00:00:00', 'none', 'uncompleted');
-INSERT INTO `orders` VALUES (7, 104, '2023-11-12 00:00:00', 'rice', 'uncompleted');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -606,7 +589,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 213 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 226 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -724,6 +707,19 @@ INSERT INTO `sys_logininfor` VALUES (209, '123', '127.0.0.1', '内网IP', 'Chrom
 INSERT INTO `sys_logininfor` VALUES (210, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-12 13:33:33');
 INSERT INTO `sys_logininfor` VALUES (211, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-12 13:43:30');
 INSERT INTO `sys_logininfor` VALUES (212, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-12 21:38:47');
+INSERT INTO `sys_logininfor` VALUES (213, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-11-14 17:49:03');
+INSERT INTO `sys_logininfor` VALUES (214, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 17:49:07');
+INSERT INTO `sys_logininfor` VALUES (215, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 17:57:07');
+INSERT INTO `sys_logininfor` VALUES (216, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 17:59:43');
+INSERT INTO `sys_logininfor` VALUES (217, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 18:05:56');
+INSERT INTO `sys_logininfor` VALUES (218, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '退出成功', '2023-11-14 18:09:35');
+INSERT INTO `sys_logininfor` VALUES (219, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误1次', '2023-11-14 18:09:42');
+INSERT INTO `sys_logininfor` VALUES (220, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-11-14 18:09:42');
+INSERT INTO `sys_logininfor` VALUES (221, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 18:09:49');
+INSERT INTO `sys_logininfor` VALUES (222, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 18:36:29');
+INSERT INTO `sys_logininfor` VALUES (223, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 18:49:25');
+INSERT INTO `sys_logininfor` VALUES (224, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 18:56:04');
+INSERT INTO `sys_logininfor` VALUES (225, '123', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-11-14 19:06:51');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -909,7 +905,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 306 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 310 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1120,6 +1116,10 @@ INSERT INTO `sys_oper_log` VALUES (302, 'orders', 1, 'com.ruoyi.system.controlle
 INSERT INTO `sys_oper_log` VALUES (303, 'details', 1, 'com.ruoyi.details.controller.OrderDetailsController.add()', 'POST', 1, '123', NULL, '/details/details', '127.0.0.1', '内网IP', '{\"detailId\":23,\"itemId\":235,\"orderId\":6,\"params\":{},\"quantity\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-11-12 13:43:40', 9);
 INSERT INTO `sys_oper_log` VALUES (304, 'orders', 1, 'com.ruoyi.system.controller.OrdersController.add()', 'POST', 1, '123', NULL, '/system/orders', '127.0.0.1', '内网IP', '{\"orderDecorator\":\"rice\",\"orderId\":7,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-12\",\"params\":{},\"userId\":104}', '{\"orderDecorator\":\"rice\",\"orderId\":7,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-12\",\"params\":{},\"userId\":104}', 0, NULL, '2023-11-12 13:43:52', 4);
 INSERT INTO `sys_oper_log` VALUES (305, 'details', 1, 'com.ruoyi.details.controller.OrderDetailsController.add()', 'POST', 1, '123', NULL, '/details/details', '127.0.0.1', '内网IP', '{\"detailId\":24,\"itemId\":236,\"orderId\":7,\"params\":{},\"quantity\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-11-12 13:43:52', 8);
+INSERT INTO `sys_oper_log` VALUES (306, 'orders', 1, 'com.ruoyi.orders.controller.OrdersController.add()', 'POST', 1, '123', NULL, '/orders/orders', '127.0.0.1', '内网IP', '{\"orderId\":8,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-14\",\"params\":{},\"userId\":104}', '{\"orderId\":8,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-14\",\"params\":{},\"userId\":104}', 0, NULL, '2023-11-14 18:11:14', 19);
+INSERT INTO `sys_oper_log` VALUES (307, 'details', 1, 'com.ruoyi.details.controller.OrderDetailsController.add()', 'POST', 1, '123', NULL, '/details/details', '127.0.0.1', '内网IP', '{\"detailId\":25,\"itemId\":236,\"orderId\":8,\"params\":{},\"quantity\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-11-14 18:11:15', 8);
+INSERT INTO `sys_oper_log` VALUES (308, 'orders', 1, 'com.ruoyi.orders.controller.OrdersController.add()', 'POST', 1, '123', NULL, '/orders/orders', '127.0.0.1', '内网IP', '{\"orderId\":9,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-14\",\"params\":{},\"userId\":104}', '{\"orderId\":9,\"orderState\":\"uncompleted\",\"orderTime\":\"2023-11-14\",\"params\":{},\"userId\":104}', 0, NULL, '2023-11-14 18:12:59', 8);
+INSERT INTO `sys_oper_log` VALUES (309, 'details', 1, 'com.ruoyi.details.controller.OrderDetailsController.add()', 'POST', 1, '123', NULL, '/details/details', '127.0.0.1', '内网IP', '{\"detailId\":26,\"itemId\":235,\"orderId\":9,\"params\":{},\"quantity\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-11-14 18:12:59', 9);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1244,12 +1244,12 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-11-12 13:31:28', 'admin', '2023-10-24 13:50:37', '', '2023-11-12 13:31:27', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-11-14 18:05:56', 'admin', '2023-10-24 13:50:37', '', '2023-11-14 18:05:56', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-10-24 13:50:37', 'admin', '2023-10-24 13:50:37', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (101, NULL, 'customer1', 'customer1', '00', '', '', '0', '', '$2a$10$cO6NTD5vEex5eH7SHSy32OiCE2Rm5Ov5UeGIwVYIUYWUtxEYINxm2', '0', '0', '127.0.0.1', '2023-10-26 15:54:17', '', '2023-10-26 14:54:41', '', '2023-10-26 15:54:17', NULL);
 INSERT INTO `sys_user` VALUES (102, NULL, '111', '111', '00', '', '', '0', '', '$2a$10$rcO1nJS7gIgemU6zmIcP5O.uq6FPjbm3f.8VM1CGOzgz5KyPts8sK', '0', '0', '127.0.0.1', '2023-11-02 16:05:55', '', '2023-11-02 16:00:00', '', '2023-11-02 16:05:55', NULL);
 INSERT INTO `sys_user` VALUES (103, NULL, 'cus1', 'cus1', '00', '', '', '0', '', '$2a$10$yeVim86JziIHih4UTvOcquT0uCtkpzf6pJORP508Hs6mU5vU5sLjy', '0', '0', '127.0.0.1', '2023-11-03 14:20:27', '', '2023-11-03 14:16:26', '', '2023-11-03 14:20:26', NULL);
-INSERT INTO `sys_user` VALUES (104, NULL, '123', '123', '00', '', '', '0', '', '$2a$10$6DN5SZLeYckPRphUSALrrOSp6ZevWSsEUv77idupwe55R/F28IV06', '0', '0', '127.0.0.1', '2023-11-12 21:38:47', '', '2023-11-12 10:41:39', '', '2023-11-12 21:38:47', NULL);
+INSERT INTO `sys_user` VALUES (104, NULL, '123', '123', '00', '', '', '0', '', '$2a$10$6DN5SZLeYckPRphUSALrrOSp6ZevWSsEUv77idupwe55R/F28IV06', '0', '0', '127.0.0.1', '2023-11-14 19:06:51', '', '2023-11-12 10:41:39', '', '2023-11-14 19:06:51', NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_post
