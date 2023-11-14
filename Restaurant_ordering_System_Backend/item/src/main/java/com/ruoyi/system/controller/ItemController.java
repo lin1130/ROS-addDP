@@ -30,7 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-11-12
  */
 @RestController
-@RequestMapping("/system/item")
+@RequestMapping("/item/item")
 public class ItemController extends BaseController
 {
     @Autowired
@@ -44,7 +44,7 @@ public class ItemController extends BaseController
     /**
      * 查询item table列表
      */
-    @PreAuthorize("@ss.hasPermi('system:item:list')")
+    @PreAuthorize("@ss.hasPermi('item:item:list')")
     @GetMapping("/list")
     public TableDataInfo list(Item item)
     {
@@ -56,7 +56,7 @@ public class ItemController extends BaseController
     /**
      * 导出item table列表
      */
-    @PreAuthorize("@ss.hasPermi('system:item:export')")
+    @PreAuthorize("@ss.hasPermi('item:item:export')")
     @Log(title = "item table", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Item item)
@@ -69,7 +69,7 @@ public class ItemController extends BaseController
     /**
      * 获取item table详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:item:query')")
+    @PreAuthorize("@ss.hasPermi('item:item:query')")
     @GetMapping(value = "/{itemId}")
     public AjaxResult getInfo(@PathVariable("itemId") Long itemId)
     {
@@ -79,7 +79,7 @@ public class ItemController extends BaseController
     /**
      * 新增item table
      */
-    @PreAuthorize("@ss.hasPermi('system:item:add')")
+    @PreAuthorize("@ss.hasPermi('item:item:add')")
     @Log(title = "item table", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Item item)
@@ -90,7 +90,7 @@ public class ItemController extends BaseController
     /**
      * 修改item table
      */
-    @PreAuthorize("@ss.hasPermi('system:item:edit')")
+    @PreAuthorize("@ss.hasPermi('item:item:edit')")
     @Log(title = "item table", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Item item)
@@ -101,7 +101,7 @@ public class ItemController extends BaseController
     /**
      * 删除item table
      */
-    @PreAuthorize("@ss.hasPermi('system:item:remove')")
+    @PreAuthorize("@ss.hasPermi('item:item:remove')")
     @Log(title = "item table", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{itemIds}")
     public AjaxResult remove(@PathVariable Long[] itemIds)
